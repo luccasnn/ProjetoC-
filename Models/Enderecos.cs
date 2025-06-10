@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace PessoasAPI.Models;
 
@@ -19,5 +20,6 @@ public class Endereco
     // FK
     [ForeignKey("Pessoa")]
     public int PessoaId { get; set; }
+    [JsonIgnore]
     public Pessoa? Pessoa { get; set; }
 }

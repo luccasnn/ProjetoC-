@@ -67,3 +67,4 @@ C:\Users\lucca\OneDrive\Documentos\Estudando.Net\ProjetoC#\PessoasAPI\obj\Debug\
 C:\Users\lucca\OneDrive\Documentos\Estudando.Net\ProjetoC#\PessoasAPI\obj\Debug\net7.0\PessoasAPI.pdb
 C:\Users\lucca\OneDrive\Documentos\Estudando.Net\ProjetoC#\PessoasAPI\obj\Debug\net7.0\PessoasAPI.genruntimeconfig.cache
 C:\Users\lucca\OneDrive\Documentos\Estudando.Net\ProjetoC#\PessoasAPI\obj\Debug\net7.0\ref\PessoasAPI.dll
+C:\Users\lucca\OneDrive\Documentos\Estudando.Net\ProjetoC#\PessoasAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.InMemory.dll

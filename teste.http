@@ -1,32 +1,70 @@
-### Listar pessoas
-GET http://localhost:5128/api/pessoas
-
-###
-
-### Criar pessoa
-POST http://localhost:5128/api/pessoas
-Content-Type: application/json
-
-{
-  "nome": "Ana",
-  "idade": 28,
-  "enderecos": []
-}
-
-###
-
-### Criar endereço para pessoa 1
+### Criar um endereço (PessoaId será nulo)
 POST http://localhost:5128/api/enderecos
 Content-Type: application/json
 
 {
-  "rua": "Rua X",
-  "cidade": "Curitiba",
-  "estado": "PR",
-  "pessoaId": 1
+  "rua": "Rua das Flores",
+  "cidade": "São Paulo",
+  "estado": "SP"
 }
 
 ###
 
-### Listar endereços da pessoa 1
-GET http://localhost:5128/api/enderecos/pessoa/1
+### Listar todos os endereços
+GET http://localhost:5128/api/enderecos
+
+###
+
+### Criar uma pessoa (com EnderecoId existente)
+POST http://localhost:5128/api/pessoas
+Content-Type: application/json
+
+{
+  "nome": "João da Silva",
+  "idade": 30,
+  "enderecoId": 1
+}
+
+###
+
+### Listar todas as pessoas com o endereço vinculado (objeto completo)
+GET http://localhost:5128/api/pessoas
+
+###
+
+### Obter uma pessoa específica
+GET http://localhost:5128/api/pessoas/2
+
+###
+
+### Atualizar uma pessoa
+PUT http://localhost:5128/api/pessoas/1
+Content-Type: application/json
+
+{
+  "nome": "João Atualizado",
+  "idade": 35,
+  "enderecoId": 1
+}
+
+###
+
+### Remover uma pessoa
+DELETE http://localhost:5128/api/pessoas/1
+
+###
+
+### Atualizar um endereço
+PUT http://localhost:5128/api/enderecos/1
+Content-Type: application/json
+
+{
+  "rua": "Rua Nova",
+  "cidade": "Rio de Janeiro",
+  "estado": "RJ"
+}
+
+###
+
+### Remover um endereço
+DELETE http://localhost:5128/api/enderecos/1

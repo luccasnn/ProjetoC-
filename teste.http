@@ -1,0 +1,32 @@
+### Listar pessoas
+GET http://localhost:5128/api/pessoas
+
+###
+
+### Criar pessoa
+POST http://localhost:5128/api/pessoas
+Content-Type: application/json
+
+{
+  "nome": "Ana",
+  "idade": 28,
+  "enderecos": []
+}
+
+###
+
+### Criar endereço para pessoa 1
+POST http://localhost:5128/api/enderecos
+Content-Type: application/json
+
+{
+  "rua": "Rua X",
+  "cidade": "Curitiba",
+  "estado": "PR",
+  "pessoaId": 1
+}
+
+###
+
+### Listar endereços da pessoa 1
+GET http://localhost:5128/api/enderecos/pessoa/1

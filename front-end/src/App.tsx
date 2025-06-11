@@ -1,4 +1,3 @@
-// App.tsx
 import { useEffect, useState } from "react";
 
 type Endereco = {
@@ -67,52 +66,117 @@ export default function App() {
     setEditandoPessoaId(null);
   };
 
+  // Função para salvar edição de pessoa
+  const salvarEdicaoPessoa = () => {
+    if (editandoPessoaId === null) {
+      alert("Nenhuma pessoa selecionada para edição");
+      return;
+    }
+
+    if (!nome.trim()) {
+      alert("Nome é obrigatório");
+      return;
+    }
+
+    const idadeNum = Number(idade);
+    if (isNaN(idadeNum) || idadeNum <= 0) {
+      alert("Idade inválida");
+      return;
+    }
+
+    const enderecoIdNum = Number(enderecoId);
+    if (isNaN(enderecoIdNum) || enderecoIdNum <= 0) {
+      alert("Endereço inválido");
+      return;
+    }
+
+    const pessoaEditada = {
+      id: editandoPessoaId,
+      nome: nome.trim(),
+      idade: idadeNum,
+      enderecoId: enderecoIdNum,
+    };
+
+    fetch(`${API_PESSOAS}/${editandoPessoaId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(pessoaEditada),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Erro ao editar pessoa");
+        return res.json();
+      })
+      .then((pessoaAtualizada: Pessoa) => {
+        setPessoas((prevPessoas) =>
+          prevPessoas.map((p) =>
+            p.id === pessoaAtualizada.id ? pessoaAtualizada : p
+          )
+        );
+        limparCamposPessoa();
+        setView("pessoas");
+      })
+      .catch((err) => alert(err.message || "Erro ao editar pessoa"));
+  };
+
+  // Submit do formulário de pessoa - cria ou edita
   const handleSubmitPessoa = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const pessoaData = {
-      nome,
-      idade: parseInt(idade),
-      enderecoId: parseInt(enderecoId),
+    if (editandoPessoaId) {
+      salvarEdicaoPessoa();
+      return;
+    }
+
+    if (!nome.trim()) {
+      alert("Nome é obrigatório");
+      return;
+    }
+
+    const idadeNum = Number(idade);
+    if (isNaN(idadeNum) || idadeNum <= 0) {
+      alert("Idade inválida");
+      return;
+    }
+
+    const enderecoIdNum = Number(enderecoId);
+    if (isNaN(enderecoIdNum) || enderecoIdNum <= 0) {
+      alert("Endereço inválido");
+      return;
+    }
+
+    const pessoaNova = {
+      nome: nome.trim(),
+      idade: idadeNum,
+      enderecoId: enderecoIdNum,
     };
 
-    if (editandoPessoaId) {
-      fetch(`${API_PESSOAS}/${editandoPessoaId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(pessoaData),
+    fetch(API_PESSOAS, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(pessoaNova),
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Erro ao cadastrar pessoa");
+        return res.json();
       })
-        .then((res) => {
-          if (!res.ok) throw new Error("Erro ao atualizar pessoa");
-          return res.json();
-        })
-        .then(() => {
-          fetchPessoas();
-          limparCamposPessoa();
-        })
-        .catch((err) => alert("Erro ao atualizar pessoa"));
-    } else {
-      fetch(API_PESSOAS, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(pessoaData),
+      .then((data) => {
+        setPessoas([...pessoas, data]);
+        limparCamposPessoa();
       })
-        .then((res) => {
-          if (!res.ok) throw new Error("Erro ao cadastrar pessoa");
-          return res.json();
-        })
-        .then((data) => {
-          setPessoas([...pessoas, data]);
-          limparCamposPessoa();
-        })
-        .catch((err) => alert("Erro ao cadastrar pessoa"));
-    }
+      .catch(() => alert("Erro ao cadastrar pessoa"));
   };
 
+  // const prepararEdicaoPessoa = (p: Pessoa) => {
+  //   setNome(p.nome);
+  //   setIdade(p.idade.toString());
+  //   setEnderecoId(p.enderecoId.toString());
+  //   setEditandoPessoaId(p.id);
+  //   setView("pessoas");
+  // };
   const prepararEdicaoPessoa = (p: Pessoa) => {
     setNome(p.nome);
     setIdade(p.idade.toString());
-    setEnderecoId(p.enderecoId.toString());
+    setEnderecoId(p.enderecoId != null ? p.enderecoId.toString() : "");
     setEditandoPessoaId(p.id);
     setView("pessoas");
   };
@@ -231,25 +295,28 @@ export default function App() {
               ))}
             </select>
             <button type="submit">
-              {editandoPessoaId ? "Atualizar" : "Cadastrar"}
+              {editandoPessoaId ? "Salvar" : "Cadastrar"}
             </button>
             {editandoPessoaId && (
-              <button type="button" onClick={limparCamposPessoa}>
+              <button
+                type="button"
+                onClick={() => {
+                  limparCamposPessoa();
+                }}
+              >
                 Cancelar
               </button>
             )}
           </form>
 
+          <h2>Lista de Pessoas</h2>
           <ul>
             {pessoas.map((p) => (
               <li key={p.id}>
-                {p.nome}, {p.idade} anos – Endereço:{" "}
-                {p.endereco
-                  ? `${p.endereco.rua}, ${p.endereco.cidade} - ${p.endereco.estado}`
-                  : "Sem endereço"}
-                <button onClick={() => prepararEdicaoPessoa(p)}>Editar</button>
+                {p.nome} ({p.idade}) - Endereço ID: {p.enderecoId}{" "}
+                <button onClick={() => prepararEdicaoPessoa(p)}>Editar</button>{" "}
                 <button onClick={() => handleDeletarPessoa(p.id)}>
-                  Deletar
+                  Excluir
                 </button>
               </li>
             ))}
@@ -259,9 +326,9 @@ export default function App() {
 
       {view === "enderecos" && (
         <>
-          <h2>
+          <h1>
             {editandoEnderecoId ? "Editar Endereço" : "Cadastro de Endereços"}
-          </h2>
+          </h1>
           <form onSubmit={handleSubmitEndereco}>
             <input
               type="text"
@@ -285,24 +352,30 @@ export default function App() {
               required
             />
             <button type="submit">
-              {editandoEnderecoId ? "Atualizar" : "Cadastrar"}
+              {editandoEnderecoId ? "Salvar" : "Cadastrar"}
             </button>
             {editandoEnderecoId && (
-              <button type="button" onClick={limparCamposEndereco}>
+              <button
+                type="button"
+                onClick={() => {
+                  limparCamposEndereco();
+                }}
+              >
                 Cancelar
               </button>
             )}
           </form>
 
+          <h2>Lista de Endereços</h2>
           <ul>
-            {enderecos.map((e) => (
-              <li key={e.id}>
-                {e.rua}, {e.cidade} - {e.estado}
-                <button onClick={() => prepararEdicaoEndereco(e)}>
+            {enderecos.map((end) => (
+              <li key={end.id}>
+                {end.rua}, {end.cidade} - {end.estado}{" "}
+                <button onClick={() => prepararEdicaoEndereco(end)}>
                   Editar
-                </button>
-                <button onClick={() => handleDeletarEndereco(e.id)}>
-                  Deletar
+                </button>{" "}
+                <button onClick={() => handleDeletarEndereco(end.id)}>
+                  Excluir
                 </button>
               </li>
             ))}

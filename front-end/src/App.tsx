@@ -240,9 +240,10 @@ export default function App() {
   };
 
   const prepararEdicaoEndereco = (end: Endereco) => {
+    console.log("Endereço recebido:", end);
     setRua(end.rua);
     setCidade(end.cidade);
-    setEstado(end.estado);
+    setEstado(end.estado); // Confirme que aqui o valor está correto!
     setEditandoEnderecoId(end.id);
     setView("enderecos");
   };
@@ -348,7 +349,7 @@ export default function App() {
               type="text"
               value={estado}
               placeholder="Estado"
-              onChange={(e) => setEstado(e.target.value)}
+              onChange={(e) => setEstado(e.target.value.trim())}
               required
             />
             <button type="submit">

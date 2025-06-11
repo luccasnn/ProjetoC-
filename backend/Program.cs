@@ -142,6 +142,7 @@ app.MapPut("/api/enderecos/{id}", ([FromRoute] int id, [FromBody] Endereco ender
 
     endereco.Rua = enderecoAtualizado.Rua;
     endereco.Cidade = enderecoAtualizado.Cidade;
+    endereco.Estado = enderecoAtualizado.Estado;
     endereco.PessoaId = enderecoAtualizado.PessoaId;
 
     ctx.Enderecos.Update(endereco);

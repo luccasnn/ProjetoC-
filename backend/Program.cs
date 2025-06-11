@@ -8,9 +8,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=banco.db"));
 builder.Services.AddCors();
+
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
     options.SerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+});
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
 });
 
 
@@ -127,5 +137,5 @@ app.MapDelete("/api/enderecos/{id}", ([FromRoute] int id, [FromServices] AppDbCo
     ctx.SaveChanges();
     return Results.Ok(endereco);
 });
-
+app.UseCors();
 app.Run();

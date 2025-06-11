@@ -1792,11 +1792,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\lucca\\OneDrive\\Documentos\\Estudando.Net\\ProjetoC#\\PessoasAPI\\PessoasAPI.csproj",
+      "projectUniqueName": "C:\\Users\\lucca\\OneDrive\\Documentos\\Estudando.Net\\ProjetoCs\\ProjetoCompleto\\backend\\PessoasAPI.csproj",
       "projectName": "PessoasAPI",
-      "projectPath": "C:\\Users\\lucca\\OneDrive\\Documentos\\Estudando.Net\\ProjetoC#\\PessoasAPI\\PessoasAPI.csproj",
+      "projectPath": "C:\\Users\\lucca\\OneDrive\\Documentos\\Estudando.Net\\ProjetoCs\\ProjetoCompleto\\backend\\PessoasAPI.csproj",
       "packagesPath": "C:\\Users\\lucca\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\lucca\\OneDrive\\Documentos\\Estudando.Net\\ProjetoC#\\PessoasAPI\\obj\\",
+      "outputPath": "C:\\Users\\lucca\\OneDrive\\Documentos\\Estudando.Net\\ProjetoCs\\ProjetoCompleto\\backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\lucca\\AppData\\Roaming\\NuGet\\NuGet.Config"

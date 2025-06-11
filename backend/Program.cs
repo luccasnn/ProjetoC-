@@ -5,6 +5,7 @@ using PessoasAPI.Models;
 using PessoasAPI.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite("Data Source=banco.db"));
 builder.Services.AddCors();
@@ -71,19 +72,39 @@ app.MapPost("/api/pessoas", async ([FromBody] Pessoa pessoa, [FromServices] AppD
     return Results.Created($"/pessoas/{pessoa.Id}", pessoa);
 });
 
+// app.MapPut("/api/pessoas/{id}", ([FromRoute] int id, [FromBody] Pessoa pessoaAtualizada, [FromServices] AppDbContext ctx) =>
+// {
+//     var pessoa = ctx.Pessoas.Find(id);
+//     if (pessoa is null) return Results.NotFound();
+
+//     pessoa.Nome = pessoaAtualizada.Nome;
+//     pessoa.Idade = pessoaAtualizada.Idade;
+//     pessoa.EnderecoId = pessoaAtualizada.EnderecoId;
+
+//     ctx.Pessoas.Update(pessoa);
+//     ctx.SaveChanges();
+//     return Results.Ok(pessoa);
+// });
 app.MapPut("/api/pessoas/{id}", ([FromRoute] int id, [FromBody] Pessoa pessoaAtualizada, [FromServices] AppDbContext ctx) =>
 {
-    var pessoa = ctx.Pessoas.Find(id);
-    if (pessoa is null) return Results.NotFound();
+    var pessoa = ctx.Pessoas.Include(p => p.Endereco).FirstOrDefault(p => p.Id == id);
+    if (pessoa == null) return Results.NotFound();
+
+    var endereco = ctx.Enderecos.Find(pessoaAtualizada.EnderecoId);
+    if (endereco == null)
+        return Results.BadRequest("Endereço informado não existe.");
 
     pessoa.Nome = pessoaAtualizada.Nome;
     pessoa.Idade = pessoaAtualizada.Idade;
-    pessoa.EnderecoId = pessoaAtualizada.EnderecoId;
 
-    ctx.Pessoas.Update(pessoa);
+    pessoa.Endereco = endereco;
+    pessoa.EnderecoId = endereco.Id;
+
     ctx.SaveChanges();
+
     return Results.Ok(pessoa);
 });
+
 
 app.MapDelete("/api/pessoas/{id}", ([FromRoute] int id, [FromServices] AppDbContext ctx) =>
 {

@@ -38,13 +38,13 @@ GET http://localhost:5128/api/pessoas/2
 ###
 
 ### Atualizar uma pessoa
-PUT http://localhost:5128/api/pessoas/1
+PUT http://localhost:5128/api/pessoas/9
 Content-Type: application/json
 
 {
   "nome": "João Atualizado",
   "idade": 35,
-  "enderecoId": 1
+  "enderecoId": 2
 }
 
 ###

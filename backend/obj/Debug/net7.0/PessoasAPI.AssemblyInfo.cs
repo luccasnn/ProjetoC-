@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PessoasAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7107fbe8fc063c88ac3a7f6b3abf06a47d32efcb")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ddc5b51ed5bfa7a3a7e3f1ca54fac2a83b17b61c")]
 [assembly: System.Reflection.AssemblyProductAttribute("PessoasAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PessoasAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

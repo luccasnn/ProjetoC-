@@ -3,7 +3,7 @@ POST http://localhost:5128/api/enderecos
 Content-Type: application/json
 
 {
-  "rua": "Rua das Flores",
+  "rua": "",
   "cidade": "São Paulo",
   "estado": "SP"
 }
@@ -20,9 +20,9 @@ POST http://localhost:5128/api/pessoas
 Content-Type: application/json
 
 {
-  "nome": "João da Silva",
+  "nome": "",
   "idade": 30,
-  "enderecoId": 1
+  "enderecoId": 9
 }
 
 ###
